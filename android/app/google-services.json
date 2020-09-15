@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "489989554488",
+    "firebase_url": "https://onesignaldemo-68134.firebaseio.com",
+    "project_id": "onesignaldemo-68134",
+    "storage_bucket": "onesignaldemo-68134.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:489989554488:android:5df461f225ededa372c1cd",
+        "android_client_info": {
+          "package_name": "com.kawee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "489989554488-ddb8evsfegra2jo986j8pueadse0359s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmzfVMlrXUiJpPun1Yj1DXKiN8bhkEqsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "489989554488-ddb8evsfegra2jo986j8pueadse0359s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
