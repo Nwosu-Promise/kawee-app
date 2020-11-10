@@ -389,6 +389,7 @@ class _ProfileState extends State<Profile> {
                                             json.decode(response.body);
                                         status = responseBody["status"];
                                         if (status == "success") {
+                                          preferences.remove("token");
                                           Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(

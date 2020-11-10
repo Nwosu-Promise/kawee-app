@@ -119,11 +119,11 @@ class _LoginState extends State<Login> {
                         print(response.statusCode);
                         print(response.body);
                       }
-
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Front(index: 3)));
+                      //
+                      // Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => Front(index: 3)));
                     }),
               ),
               SizedBox(

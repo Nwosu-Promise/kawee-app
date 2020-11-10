@@ -107,7 +107,7 @@ class _NewTtsState extends State<NewTts> {
                         context: context,
                         builder: (_) => AlertDialog(
                               title: Text(
-                                "Delete Note",
+                                "Delete This Note",
                                 textAlign: TextAlign.center,
                               ),
                               content: Text(
@@ -179,8 +179,8 @@ class _NewTtsState extends State<NewTts> {
           children: [
             TextField(
               controller: _title,
-              decoration:
-                  InputDecoration(labelText: "Title", hintText: "Note Title"),
+              decoration: InputDecoration(
+                  labelText: "Title", hintText: "Speech to text Title"),
             ),
             SizedBox(
               height: 10,
@@ -206,44 +206,83 @@ class _NewTtsState extends State<NewTts> {
                 child: RaisedButton(
                   padding: const EdgeInsets.all(20),
                   child: Text(widget.edit == null ? "Add Note" : "Update Note"),
-                  onPressed: () async {
-                    preferences = await SharedPreferences.getInstance();
+                  onPressed: widget.edit == null
+                      ? () async {
+                          preferences = await SharedPreferences.getInstance();
 
-                    String token = preferences.getString("token");
-                    String success;
-                    Map<String, dynamic> body = {
-                      "title": _title.text,
-                      "content": text.text,
-                    };
+                          String token = preferences.getString("token");
+                          String success;
+                          Map<String, dynamic> body = {
+                            "title": _title.text,
+                            "content": text.text,
+                          };
 
-                    Response response =
-                        await post(apiUtility.tts, body: body, headers: {
-                      'Authorization': 'Bearer $token',
-                    });
+                          Response response =
+                              await post(apiUtility.tts, body: body, headers: {
+                            'Authorization': 'Bearer $token',
+                          });
 
-                    if (response.statusCode == 200) {
-                      var responseBody = json.decode(response.body);
-                      success = responseBody["status"];
-                      if (success == "success") {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => Front(
-                                      index: 5,
-                                    )));
-                      } else {}
-                    } else {
-                      print(response.statusCode);
-                      print(response.body);
-                    }
+                          if (response.statusCode == 200) {
+                            var responseBody = json.decode(response.body);
+                            success = responseBody["status"];
+                            if (success == "success") {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => Front(
+                                            index: 5,
+                                          )));
+                            } else {}
+                          } else {
+                            print(response.statusCode);
+                            print(response.body);
+                          }
 
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => Front(
-                                  index: 5,
-                                )));
-                  },
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => Front(
+                                        index: 5,
+                                      )));
+                        }
+                      : () async {
+                          preferences = await SharedPreferences.getInstance();
+
+                          String token = preferences.getString("token");
+                          String success;
+                          Map<String, dynamic> body = {
+                            "title": _title.text,
+                            "content": text.text,
+                          };
+
+                          Response response =
+                              await patch(apiUtility.tts, body: body, headers: {
+                            'Authorization': 'Bearer $token',
+                          });
+
+                          if (response.statusCode == 200) {
+                            var responseBody = json.decode(response.body);
+                            success = responseBody["status"];
+                            if (success == "success") {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => Front(
+                                            index: 5,
+                                          )));
+                            } else {}
+                          } else {
+                            print(response.statusCode);
+                            print(response.body);
+                          }
+
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => Front(
+                                        index: 5,
+                                      )));
+                        },
                 ))
             // Container(
             //   padding: const EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 150.0),
@@ -284,7 +323,6 @@ class _NewTtsState extends State<NewTts> {
             //     selection: TextSelection(
             //         baseOffset: text.text.length - 1,
             //         extentOffset: val.recognizedWords.length));
-
 
             String vb = val.recognizedWords;
             String jk = prev + vb;

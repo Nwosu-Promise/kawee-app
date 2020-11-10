@@ -48,7 +48,7 @@ class _OcrState extends State<Ocr> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.edit == null ? "New Note" : "Update Note",
+          widget.edit == null ? "New OCR" : "Update OCR",
           style: TextStyle(
               color: white, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -134,7 +134,7 @@ class _OcrState extends State<Ocr> {
                   TextField(
                     controller: _title,
                     decoration: InputDecoration(
-                        labelText: "Title", hintText: "Note Title"),
+                        labelText: "Title", hintText: "OCR Title"),
                   ),
                   SizedBox(
                     height: 20,
@@ -159,7 +159,7 @@ class _OcrState extends State<Ocr> {
                     child: RaisedButton(
                       padding: const EdgeInsets.all(20),
                       child: Text(
-                          widget.edit == null ? "Add Note" : "Update Note"),
+                          widget.edit == null ? "Add OCR" : "Update OCR"),
                       onPressed: widget.edit == null
                           ? () async {
                               preferences =

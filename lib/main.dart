@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: FrontProvider()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme:buildTheme,
         home: Home(),
       ),

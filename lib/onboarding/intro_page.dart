@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'page_view_model.dart';
 import 'intro_content.dart';
 
-
 import '../utility/exports/exports_utilities.dart';
 
 class IntroPage extends StatelessWidget {
@@ -50,7 +49,8 @@ class IntroPage extends StatelessWidget {
                   child: Stack(
                     children: <Widget>[
                       Container(
-                          // padding: EdgeInsets.all(10),
+
+                          /// padding: EdgeInsets.all(20),
                           height: height,
                           width: width,
                           child: page.image

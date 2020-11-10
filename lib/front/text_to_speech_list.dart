@@ -60,7 +60,7 @@ class _RecordNoteState extends State<RecordNote> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Speech",
+          "Speech To Text",
           style: TextStyle(
               color: white, fontSize: 20, fontWeight: FontWeight.bold),
         ),

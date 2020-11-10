@@ -1,4 +1,4 @@
-package ng.com.shopkite.kiwee
+package com.example.kiwee
 
 import io.flutter.embedding.android.FlutterActivity
 
