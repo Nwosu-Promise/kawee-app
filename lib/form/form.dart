@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kiwee/provider/loading_provider.dart';
 import 'package:kiwee/utility/colours.dart';
+import 'package:provider/provider.dart';
 
 import 'login.dart';
 import 'register.dart';
@@ -34,49 +36,68 @@ class _AppFormState extends State<AppForm> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: NestedScrollView(
-            headerSliverBuilder: (context, isScrolling) => <Widget>[
-                  SliverAppBar(
-                    elevation: 8,
-                    leading: Center(),
-                    backgroundColor: bgWhite,
-                    expandedHeight: 100,
-                    flexibleSpace: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Center(
-                          child: Text(
-                        "KAWEE",
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: primaryColour),
+    return Consumer<LoaderProvider>(
+      builder: (_, lp, child) => Stack(
+        children: [
+          Opacity(
+            opacity: lp.opacity,
+            child: IgnorePointer(
+              ignoring: lp.ignoreTouch,
+              child: Scaffold(
+                body: SafeArea(
+                  child: NestedScrollView(
+                      headerSliverBuilder: (context, isScrolling) => <Widget>[
+                            SliverAppBar(
+                              elevation: 8,
+                              leading: Center(),
+                              backgroundColor: bgWhite,
+                              expandedHeight: 100,
+                              flexibleSpace: Container(
+                                padding: EdgeInsets.all(10),
+                                child: Center(
+                                    child: Text(
+                                  "KAWEE",
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: primaryColour),
+                                )),
+                              ),
+                            ),
+                            SliverPersistentHeader(
+                              pinned: true,
+                              floating: true,
+                              delegate: _SliverAppBarDelegate(TabBar(
+                                controller: _tabController,
+                                tabs: <Tab>[
+                                  Tab(
+                                    child: Text('Sign up'),
+                                  ),
+                                  Tab(
+                                    child: Text('Sign in'),
+                                  )
+                                ],
+                              )),
+                            )
+                          ],
+                      body: Container(
+                        alignment: Alignment.center,
+                        child: TabBarView(
+                            controller: _tabController,
+                            children: <Widget>[Register(), Login()]),
                       )),
-                    ),
-                  ),
-                  SliverPersistentHeader(
-                    pinned: true,
-                    floating: true,
-                    delegate: _SliverAppBarDelegate(TabBar(
-                      controller: _tabController,
-                      tabs: <Tab>[
-                        Tab(
-                          child: Text('Sign up'),
-                        ),
-                        Tab(
-                          child: Text('Sign in'),
-                        )
-                      ],
-                    )),
-                  )
-                ],
-            body: Container(
-              alignment: Alignment.center,
-              child: TabBarView(
-                  controller: _tabController,
-                  children: <Widget>[Register(), Login()]),
-            )),
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+              visible: lp.visibility,
+              child: Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: primaryColour,
+                ),
+              ))
+        ],
       ),
     );
   }

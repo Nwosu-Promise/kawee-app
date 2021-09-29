@@ -158,8 +158,8 @@ class _OcrState extends State<Ocr> {
                     width: double.infinity,
                     child: RaisedButton(
                       padding: const EdgeInsets.all(20),
-                      child: Text(
-                          widget.edit == null ? "Add OCR" : "Update OCR"),
+                      child:
+                          Text(widget.edit == null ? "Add OCR" : "Update OCR"),
                       onPressed: widget.edit == null
                           ? () async {
                               preferences =
@@ -254,29 +254,34 @@ class _OcrState extends State<Ocr> {
   }
 
   Future<void> onStartTextRecognitionFromCamera() async {
+   // await  FirebaseApp.initializeApp();
     // final imageFile = await _cameraService.takePhoto();
+    try {
+      final picker = ImagePicker();
+      final imageFile = await picker.getImage(source: ImageSource.camera);
 
-    final imageFile = await ImagePicker.pickImage(source: ImageSource.camera);
+      if (imageFile != null) {
+        final FirebaseVisionImage visionImage =
+            FirebaseVisionImage.fromFilePath(imageFile.path);
 
+        final TextRecognizer textRecognizer =
+            FirebaseVision.instance.textRecognizer();
 
-    if (imageFile != null) {
-      final FirebaseVisionImage visionImage =
-          FirebaseVisionImage.fromFile(imageFile);
+        final VisionText visionText =
+            await textRecognizer.processImage(visionImage);
 
-      final TextRecognizer textRecognizer =
-          FirebaseVision.instance.textRecognizer();
-      final VisionText visionText =
-          await textRecognizer.processImage(visionImage);
+        print(visionText.text);
 
-      print(visionText.text);
+        setState(() {
+          _content.text = _content.text + visionText.text;
+        });
 
-      setState(() {
-        _content.text = _content.text + visionText.text;
-      });
+        textRecognizer.close();
 
-      textRecognizer.close();
-
-      await imageFile.delete();
+        // await imageFile.path();
+      }
+    } catch (e) {
+      print("Eroror:$e");
     }
   }
 }

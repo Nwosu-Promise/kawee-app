@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'dart:math';
-import 'dart:io';
+// import 'dart:math';
+// import 'dart:io';
 
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +8,12 @@ import 'package:highlight_text/highlight_text.dart';
 import 'package:http/http.dart';
 import 'package:kiwee/front/front.dart';
 import 'package:kiwee/utility/api.dart';
-import 'package:path_provider/path_provider.dart';
+//import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:kiwee/utility/colours.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+//import 'package:path_provider/path_provider.dart';
+//import 'package:permission_handler/permission_handler.dart';
 
 ApiUtility apiUtility = ApiUtility();
 SharedPreferences preferences;
@@ -307,11 +307,12 @@ class _NewTtsState extends State<NewTts> {
 
     if (!_isListening) {
       bool available = await _speech.initialize(
-        onStatus: (val) => print('onStatus: $val'),
-        onError: (val) => print('onError: $val'),
+        onStatus: (val) => print('onStatus: $val to record'),
+        onError: (val) => print('onError: osi$val'),
       );
 
-      print("_isListening: $_isListening");
+      print("_isListening: $_isListening, $available");
+
       String prev = text.text;
 
       if (available) {
@@ -345,11 +346,15 @@ class _NewTtsState extends State<NewTts> {
           }),
         );
         print("_isListening1: $_isListening");
+      } else {
+        setState(() => _isListening = false);
+        // _speech.stop();
+        print("_isListening2: $_isListening");
       }
-    } else {
-      setState(() => _isListening = false);
-      _speech.stop();
+
+      print("_isListening3: $_isListening");
+    }else{
+
     }
-    print("_isListening2: $_isListening");
   }
 }
